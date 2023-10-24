@@ -100,7 +100,17 @@ knitr::kable(Nst, caption = "Number of students by group", format = "markdown")
 ggplot(grades, aes(x=Group)) + geom_bar(fill="white") + labs(title ="Number of students by group", x="Group", y="count")
 ```
 
-### Question
+### Question 7
+
+```{r}
+ggplot(grades, aes(x=Group,y=Exam, color=Group)) + geom_point()+ labs(title ="Grade by group", x="Group", y="count")+theme_dark()
+
+
+```
+
+```{r}
+ggplot(grades, aes(x=Group,y=Exam)) + geom_boxplot()+ labs(title ="Grade by group", x="Group", y="Grades")+theme_dark()
+```
 
 ### Question
 
