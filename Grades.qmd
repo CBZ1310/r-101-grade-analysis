@@ -71,3 +71,26 @@ var_label(Dnc) <- "Do not come to the exam"
 
 cat(Dnc, "students do not come at the exam")
 ```
+
+### Question 4
+
+```{r}
+ggplot(grades, aes(x = Exam)) + geom_bar(fill="green")+ labs(title = "Distribution of the Grades", x="Grades", y="Count")+
+  theme_dark()
+```
+
+### Question 5
+
+### Question
+
+### Question
+
+### Question
+
+### Question 
+
+### Question 
+
+### Question 
+
+### Question
