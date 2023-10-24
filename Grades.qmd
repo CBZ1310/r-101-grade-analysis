@@ -103,7 +103,7 @@ ggplot(grades, aes(x=Group)) + geom_bar(fill="white") + labs(title ="Number of s
 ### Question 7
 
 ```{r}
-ggplot(grades, aes(x=Group,y=Exam, color=Group)) + geom_point()+ labs(title ="Grade by group", x="Group", y="count")+theme_dark()
+ggplot(grades, aes(x=Group,y=Exam, color=Group)) + geom_point()+ labs(title ="Grade by group", x="Group", y="count")+theme_dark()+ theme(legend.position = "none")
 
 
 ```
@@ -112,7 +112,7 @@ ggplot(grades, aes(x=Group,y=Exam, color=Group)) + geom_point()+ labs(title ="Gr
 ggplot(grades, aes(x=Group,y=Exam)) + geom_boxplot()+ labs(title ="Grade by group", x="Group", y="Grades")+theme_dark()
 ```
 
-### Question
+### Question 8
 
 ### Question 
 
