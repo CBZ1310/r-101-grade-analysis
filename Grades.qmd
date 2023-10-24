@@ -39,4 +39,24 @@ GitHub code :
 
 ```{r}
 grades <- read_csv("grades.csv")
+
+```
+
+```{r,results='hide'}
+Vn<- names(grades)
+Vn
+```
+
+### Question 2
+
+```{r}
+rst <- grades %>% 
+  summarize("Min" = min(Exam, na.rm = TRUE), 
+            "Median" = median(Exam, na.rm = TRUE), 
+            "Max" = max(Exam, na.rm = TRUE), 
+            "Mean" = mean(Exam, na.rm = TRUE), 
+            "Standard Deviation" = sd(Exam, na.rm = TRUE))
+
+
+knitr::kable(rst, caption = "Exams - First statistics", format="markdown", )
 ```
