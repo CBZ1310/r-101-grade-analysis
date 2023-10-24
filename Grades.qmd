@@ -60,3 +60,14 @@ rst <- grades %>%
 
 knitr::kable(rst, caption = "Exams - First statistics", format="markdown", )
 ```
+
+### Question 3
+
+```{r}
+library(labelled)
+Dnc <- sum(is.na(grades$Exam))
+                         
+var_label(Dnc) <- "Do not come to the exam"
+
+cat(Dnc, "students do not come at the exam")
+```
