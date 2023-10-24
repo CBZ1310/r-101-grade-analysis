@@ -27,9 +27,7 @@ library(tidyr)
 
 <center>
 
-GitHub link :
-
-GitHub code :
+GitHub link (URL) : <https://github.com/CBZ1310/r-101-grade-analysis>
 
 </center>
 
@@ -103,20 +101,32 @@ ggplot(grades, aes(x=Group)) + geom_bar(fill="white") + labs(title ="Number of s
 ### Question 7
 
 ```{r}
-ggplot(grades, aes(x=Group,y=Exam, color=Group)) + geom_point()+ labs(title ="Grade by group", x="Group", y="count")+theme_dark()+ theme(legend.position = "none")
+ggplot(grades, aes(x=Group,y=Exam, color=Group)) + geom_point()+ labs(title ="Grade by group", x="Group", y="count")+theme_dark()+ theme(legend.position = "none",axis.text.x = element_text(angle = 45, hjust = 1))
 
 
 ```
 
 ```{r}
-ggplot(grades, aes(x=Group,y=Exam)) + geom_boxplot()+ labs(title ="Grade by group", x="Group", y="Grades")+theme_dark()
+ggplot(grades, aes(x=Group,y=Exam, fill=Group)) + geom_boxplot()+ labs(title ="Grade by group", x="Group", y="Grades")+theme_dark()+ theme(legend.position = "none", axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
 ### Question 8
 
-### Question 
+```{r}
+
+G_Dnc <- grades %>%
+  group_by(Group) %>%
+  summarize(Missing_Exam = sum(is.na(Exam)))
+
+                         
+var_label(G_Dnc) <- "Do not come to the exam by Group "
+
+knitr::kable(Nst, caption = "Number of students having missing exam by group", format = "markdown")
+```
 
 ### Question 
+
+### Question 10 
 
 ### Question 
 
