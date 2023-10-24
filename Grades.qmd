@@ -81,7 +81,20 @@ ggplot(grades, aes(x = Exam)) + geom_bar(fill="green")+ labs(title = "Distributi
 
 ### Question 5
 
-### Question
+```{r, results='hide'}
+Vn
+```
+
+```{r}
+Nst <- grades %>%
+  group_by(Group) %>% summarize(Numb=n()) 
+
+var_label(Nst) <- "Number of student"
+
+knitr::kable(Nst, caption = "Number of students by group", format = "markdown")
+```
+
+### Question 
 
 ### Question
 
