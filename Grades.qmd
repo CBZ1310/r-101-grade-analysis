@@ -1,0 +1,42 @@
+---
+title: "Lab of the 24th"
+format: html
+editor: visual
+execute :
+  keep-md: true
+  echo: FALSE
+  warning: false
+---
+
+```{r, results='hide'}
+#Setup
+
+here::i_am("r-101-grade-analysis.Rproj")
+library(here)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+```
+
+<center>
+
+# Dplyr-Lab (Lab of the 24th)
+
+</center>
+
+<center>
+
+GitHub link :
+
+GitHub code :
+
+</center>
+
+## Exercise 1
+
+### Question 1
+
+```{r}
+grades <- read_csv("grades.csv")
+```
