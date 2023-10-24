@@ -75,7 +75,7 @@ cat(Dnc, "students do not come at the exam")
 ### Question 4
 
 ```{r}
-ggplot(grades, aes(x = Exam)) + geom_bar(fill="green")+ labs(title = "Distribution of the Grades", x="Grades", y="Count")+
+ggplot(grades, aes(x = Exam)) + geom_bar(fill="white")+ labs(title = "Distribution of the Grades", x="Grades", y="Count")+
   theme_dark()
 ```
 
@@ -87,14 +87,18 @@ Vn
 
 ```{r}
 Nst <- grades %>%
-  group_by(Group) %>% summarize(Numb=n()) 
+  group_by(Group) %>% summarize(Numb=n()) %>%arrange(desc(Numb))
 
 var_label(Nst) <- "Number of student"
 
 knitr::kable(Nst, caption = "Number of students by group", format = "markdown")
 ```
 
-### Question 
+### Question 6
+
+```{r}
+ggplot(grades, aes(x=Group)) + geom_bar(fill="white") + labs(title ="Number of students by group", x="Group", y="count")
+```
 
 ### Question
 
