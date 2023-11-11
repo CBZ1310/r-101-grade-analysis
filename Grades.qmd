@@ -311,11 +311,11 @@ grades_m_onl %>%
      theme_dark()+ 
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
-```{r}
+```{r, fig.height=15}
 grades_m_onl %>%
   ggplot(aes(y=Exam, fill=as.factor(Online_missing_grades)))+
   geom_bar()+
-  labs(title = "Grades at the Exam by Online Missing Grades")
+  labs(title = "Grades at the Exam by Online Missing Grades")+
      theme_dark()+ 
   theme(legend.position = "top", axis.text.x = element_text(angle = 45, hjust = 1))
 ```
@@ -323,8 +323,27 @@ grades_m_onl %>%
 
 ### Question 16
 
+```{r}
+assiduity_table <- grades %>%
+  group_by(Id) %>%
+  summarise(Missed = any(is.na(c(MCQ_1, MCQ_2, MCQ_3, MCQ_4, MCQ_5, MCQ_6, MCQ_7, MCQ_8, MCQ_9, MCQ_10))))
+
+knitr::kable(assiduity_table)
+```
 
 ### Question 17
+
+```{r}
+freq_missed <- merge(x = grades, y=assiduity_table, by="Id")
+
+freq_missed %>%
+  group_by(Group) %>%
+  summarise(P_missed=sum(Missed)/n())%>%
+  arrange(P_missed)%>%
+  knitr::kable(caption = "Percentage of students who missed at least one MCQ_xx",format = "html", align = "c", digits = 2) %>%
+  kable_minimal()
+```
+
 
 ### Question 18
 
