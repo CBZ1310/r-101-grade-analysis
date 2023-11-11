@@ -213,14 +213,34 @@ grades_long_format <- grades %>%
 
 ### Question 11
 
-For this question, I'm not sure if I've understood the expected result. Indeed, I'm uncertain whether you want us to compute the number of all rows with NA for value or only the student where 'Exam' = NA
 
+The number of missing grades, when all value = NA is are taking into account, is `r {sum(is.na(grades_long_format$value))}`. Moreover, `r {sum(is.na(filter(grades_long_format, Studied_Variable == "Exam" )$value))}` student does not have grade for the "Exam" vairable.
 
-The number of missing grades, when all value = NA is are taking into account, is `r {sum(is.na(grades_long_format$value))}`.
-
+### Question 12
 ```{r}
-sum(is.na(filter(grades_long_format, Studied_Variable == "Exam" )$value))
+Na_glf <- grades_long_format %>% 
+  group_by(Id) %>%
+    summarise(Missing_grades = sum(is.na(value))) %>% 
+    arrange(desc(Missing_grades))
+
+Na_glf %>%
+  ggplot(aes(x=Id,y=Missing_grades))+
+  geom_col(fill="darkgrey")+
+  labs(title="Number of missing grades by student", x="Student's ID", y="Missing grades")+
+  theme_minimal()
+
 ```
 
+### Question 13
 
-The number of missing grande, when only we take into account the value of Exam wich are equal to NA is `r {sum(is.na(filter(grades_long_format, Studied_Variable == "Exam" )$value))}`.
+### Question 14
+
+### Question 15
+
+### Question 16
+
+### Question 17
+
+### Question 18
+
+
