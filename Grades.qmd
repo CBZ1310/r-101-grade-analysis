@@ -158,8 +158,6 @@ grades%>%
 #I add as.character because I want it my x axis to be in a approximatively alphabetical order to be able to find a group more easely
 ```
 
-
-
 #### Second option
 
 ```{r, fig.width=12, fig.height=24}
@@ -172,9 +170,6 @@ grades%>% filter(!is.na(Exam))%>%
   theme_minimal()+
   guides(fill = "none")
 ```
-
-
-
 
 ### Question 8
 
@@ -213,10 +208,10 @@ grades_long_format <- grades %>%
 
 ### Question 11
 
-
 The number of missing grades, when all value = NA is are taking into account, is `r {sum(is.na(grades_long_format$value))}`. Moreover, `r {sum(is.na(filter(grades_long_format, Studied_Variable == "Exam" )$value))}` student does not have grade for the "Exam" variable.
 
 ### Question 12
+
 ```{r}
 Na_glf <- grades_long_format %>% 
   group_by(Id) %>%
@@ -234,6 +229,7 @@ Na_glf %>%
 ```
 
 ### Question 13
+
 ```{r}
 Na_glf_group <- grades_long_format %>% 
   filter(Studied_Variable=="Exam")%>%
@@ -247,8 +243,8 @@ knitr::kable(Na_glf_group, caption = "Missing grades by group", format = "html")
   kable_minimal()
 ```
 
-
 ### Question 14
+
 ```{r, results='hide'}
 Vn #I use this command to remember the name of the variable
 ```
@@ -266,8 +262,8 @@ knitr::kable(caption = "Missing grade for the online test by students",format="h
   kable_minimal()
 ```
 
-
 ### Question 15
+
 ```{r}
 #The goal of this code is only to put answer of the previous question in a new object
 glf_online_answers_by_Id <- glf_online_answers %>% 
@@ -287,6 +283,7 @@ grades_m_onl %>%
   theme(axis.text.x = element_text(angle = 45, hjust = 1))+
   guides(fill = "none")
 ```
+
 ```{r, fig.height=15}
 grades_m_onl %>%
   ggplot(aes(y=Exam, fill=as.factor(Online_missing_grades)))+
@@ -295,7 +292,6 @@ grades_m_onl %>%
      theme_dark()+ 
   theme(legend.position = "top", axis.text.x = element_text(angle = 45, hjust = 1))
 ```
-
 
 ### Question 16
 
@@ -319,7 +315,6 @@ freq_missed %>%
   knitr::kable(caption = "Percentage of students who missed at least one MCQ_xx",format = "html", align = "c", digits = 2) %>%
   kable_minimal()
 ```
-
 
 ### Question 18
 
@@ -354,6 +349,3 @@ perc_missed_and_avg_grade %>%
   geom_text_repel(aes(label = Group))+
   theme_minimal()
 ```
-
-
-
