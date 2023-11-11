@@ -81,7 +81,7 @@ cat(Dnc, "students do not come at the exam")
 ### Question 4
 
 ```{r}
-ggplot(grades, aes(x = Exam)) + 
+grades %>% filter(!is.na(Exam)) %>% ggplot(aes(x = Exam)) + 
   geom_bar(fill="pink")+ 
   geom_label(stat = "count", aes(label = ..count..), fill = "pink", color = "black", size = 2.5, vjust = -0.3, label.padding = unit(0.2, "lines")) + 
   labs(title = "Distribution of the Grades", x="Grades", y="Count")+
@@ -90,7 +90,7 @@ ggplot(grades, aes(x = Exam)) +
 ```
 
 ```{r}
-ggplot(grades, aes(x = Exam, y= "count")) +
+grades %>% filter(!is.na(Exam)) %>% ggplot(aes(x = Exam, y= "count")) +
   geom_boxplot(fill="pink") +
   labs(title = "Distribution of the Grades", x = "Grades", y = "Count") +
   theme_minimal()
@@ -104,12 +104,11 @@ Vn
 
 ```{r}
 Nst <- grades %>%
-  filter(!is.na(Exam)) %>%
   group_by(Group) %>% 
-  summarize(Count=n()) %>%
-  arrange(desc(Count))
+  summarize(Total_count=n(), "Student who comes to the exam"=sum(!is.na(Exam)), "% of Student whp comes" = sum(!is.na(Exam))/n()*100) %>%
+  arrange(desc(Total_count))
 
-var_label(Nst) <- "Number of student"
+var_label(Nst) <- "Number of student by group"
 
 knitr::kable(Nst, caption = "Number of students by group", format = "html", align = "c", digits = 2) %>%
   kable_minimal()
@@ -118,7 +117,23 @@ knitr::kable(Nst, caption = "Number of students by group", format = "html", alig
 ### Question 6
 
 ```{r}
-ggplot(grades, aes(x=Group)) + geom_bar(fill="white") + labs(title ="Number of students by group", x="Group", y="count")
+grades%>% ggplot(aes(x=Group)) + 
+  geom_bar(fill="white") + 
+  labs(title ="Number of students by group", x="Group", y="count") + 
+  geom_label(stat = "count", aes(label = ..count..), fill = "pink", color = "black", size = 2.5, vjust = -0.3, label.padding = unit(0.2, "lines")) +
+  theme_dark()
+```
+
+```{r}
+grades_2 <- grades %>%
+  mutate(Come_to_the_exam = case_when(is.na(Exam) ~ "FALSE", Exam == "" ~ "",TRUE ~ "TRUE"))
+
+grades_2 %>% ggplot(aes(x=Group, fill=Come_to_the_exam)) + 
+  geom_bar() + 
+  geom_text( stat = "count",  aes(label = stat(count)),position = position_stack(vjust = 0.5),color = "white", size = 3) +
+  labs(title ="Number of students by group detailed by participation to the exam", x="Group", y="count") + 
+  scale_fill_manual(values = c("TRUE"="lightgreen", "FALSE"="darkgrey")) +
+  theme_minimal()
 ```
 
 ### Question 7
