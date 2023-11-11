@@ -282,7 +282,7 @@ var_label(grades_m_onl) <- "grades table with an additional column emphasizing t
 grades_m_onl %>%
   ggplot(aes(y=Exam, fill=as.factor(Online_missing_grades)))+
   geom_boxplot()+
-  facet_wrap(~Online_missing_grades)
+  facet_wrap(~Online_missing_grades)+
      theme_dark()+ 
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
@@ -340,7 +340,7 @@ Percent_miss_by_group <-freq_missed %>%
   arrange(P_missed)
 ```
 
-```{r, results=hide}
+```{r, results='hide'}
 perc_missed_and_avg_grade <- merge(x=avg_grade_by_g , y=Percent_miss_by_group, by="Group",all.x=TRUE) %>% arrange(desc(Average_grade))
 knitr::kable(perc_missed_and_avg_grade ) %>% kable_minimal
 ```
