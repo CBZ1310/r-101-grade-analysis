@@ -223,6 +223,8 @@ Na_glf <- grades_long_format %>%
     summarise(Missing_grades = sum(is.na(value))) %>% 
     arrange(desc(Missing_grades))
 
+var_label(Na_glf)<- "Missing Grades by student (long format)"
+
 Na_glf %>%
   ggplot(aes(x=Id,y=Missing_grades))+
   geom_col(fill="darkgrey")+
@@ -232,8 +234,22 @@ Na_glf %>%
 ```
 
 ### Question 13
+```{r}
+Na_glf_group <- grades_long_format %>% 
+  filter(Studied_Variable=="Exam")%>%
+  group_by(Group) %>%
+  summarize(Missed_Exam=sum(is.na(value))) %>%
+  arrange(desc(Missed_Exam))
+
+var_label(Na_glf_group) <- "Missing grades by grup"
+
+knitr::kable(Na_glf_group, caption = "Missing grades by group", format = "html") %>%
+  kable_minimal()
+```
+
 
 ### Question 14
+
 
 ### Question 15
 
