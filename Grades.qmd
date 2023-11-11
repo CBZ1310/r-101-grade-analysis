@@ -57,6 +57,15 @@ var_label(rst) <- "Exam's result mean statistics"
 
 knitr::kable(rst, caption = "Exams - statistics", format="html", align = "c", digits = 2) %>%
   kable_minimal()
+
+
+```
+
+```{r}
+cv_exam <- sd(grades$Exam, na.rm = TRUE)/mean(grades$Exam, na.rm = TRUE)*100
+var_label(cv_exam)<- "Coefficient of variation of the exam's grades"
+
+cat("Complementary data - Coefficient of variation =", cv_exam,"%")
 ```
 
 ### Question 3
@@ -95,11 +104,15 @@ Vn
 
 ```{r}
 Nst <- grades %>%
-  group_by(Group) %>% summarize(Numb=n()) %>%arrange(desc(Numb))
+  filter(!is.na(Exam)) %>%
+  group_by(Group) %>% 
+  summarize(Count=n()) %>%
+  arrange(desc(Count))
 
 var_label(Nst) <- "Number of student"
 
-knitr::kable(Nst, caption = "Number of students by group", format = "markdown")
+knitr::kable(Nst, caption = "Number of students by group", format = "html", align = "c", digits = 2) %>%
+  kable_minimal()
 ```
 
 ### Question 6
