@@ -22,6 +22,7 @@ library(kableExtra)
 library(viridis)
 library(RColorBrewer)
 library(forcats)
+library(stringr)
 ```
 
 <center>
@@ -214,7 +215,7 @@ grades_long_format <- grades %>%
 ### Question 11
 
 
-The number of missing grades, when all value = NA is are taking into account, is `r {sum(is.na(grades_long_format$value))}`. Moreover, `r {sum(is.na(filter(grades_long_format, Studied_Variable == "Exam" )$value))}` student does not have grade for the "Exam" vairable.
+The number of missing grades, when all value = NA is are taking into account, is `r {sum(is.na(grades_long_format$value))}`. Moreover, `r {sum(is.na(filter(grades_long_format, Studied_Variable == "Exam" )$value))}` student does not have grade for the "Exam" variable.
 
 ### Question 12
 ```{r}
@@ -226,7 +227,7 @@ Na_glf <- grades_long_format %>%
 var_label(Na_glf)<- "Missing Grades by student (long format)"
 
 Na_glf %>%
-  ggplot(aes(x=Id,y=Missing_grades))+
+  ggplot(aes(x=Missing_grades,y=Id))+
   geom_col(fill="darkgrey")+
   labs(title="Number of missing grades by student", x="Student's ID", y="Missing grades")+
   theme_minimal()
@@ -249,6 +250,23 @@ knitr::kable(Na_glf_group, caption = "Missing grades by group", format = "html")
 
 
 ### Question 14
+```{r, results='hide'}
+Vn #I use this command to remember the name of the variable
+```
+
+```{r}
+# I put the command library(stringr) in my first chunk code 
+
+glf_online_answers <- grades_long_format%>%
+  filter(str_starts(Studied_Variable, "Online"))
+
+var_label(glf_online_answers) <- "Grades (long format) only for online tests"
+
+glf_online_answers %>% group_by(Id) %>% summarize(Missing_grades =sum(is.na(value))) %>%
+knitr::kable(caption = "Missing grade for the online test by students",format="html") %>%
+  kable_minimal()
+```
+
 
 
 ### Question 15
