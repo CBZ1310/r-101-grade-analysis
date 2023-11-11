@@ -16,7 +16,9 @@ library(here)
 library(ggplot2)
 library(dplyr)
 library(tidyr)
-
+library(labelled)
+library(viridis)
+library(RColorBrewer)
 ```
 
 <center>
@@ -25,11 +27,7 @@ library(tidyr)
 
 </center>
 
-<center>
-
-GitHub link (URL) : <https://github.com/CBZ1310/r-101-grade-analysis>
-
-</center>
+<center>GitHub link (URL) : <https://github.com/CBZ1310/r-101-grade-analysis></center>
 
 ## Exercise 1
 
@@ -55,14 +53,15 @@ rst <- grades %>%
             "Mean" = mean(Exam, na.rm = TRUE), 
             "Standard Deviation" = sd(Exam, na.rm = TRUE))
 
+var_label(rst) <- "Exam's result mean statistics"
 
-knitr::kable(rst, caption = "Exams - First statistics", format="markdown", )
+knitr::kable(rst, caption = "Exams - statistics", format="html", align = "c", digits = 2) %>%
+  kable_minimal()
 ```
 
 ### Question 3
 
 ```{r}
-library(labelled)
 Dnc <- sum(is.na(grades$Exam))
                          
 var_label(Dnc) <- "Do not come to the exam"
@@ -73,8 +72,19 @@ cat(Dnc, "students do not come at the exam")
 ### Question 4
 
 ```{r}
-ggplot(grades, aes(x = Exam)) + geom_bar(fill="white")+ labs(title = "Distribution of the Grades", x="Grades", y="Count")+
-  theme_dark()
+ggplot(grades, aes(x = Exam)) + 
+  geom_bar(fill="pink")+ 
+  geom_label(stat = "count", aes(label = ..count..), fill = "pink", color = "black", size = 2.5, vjust = -0.3, label.padding = unit(0.2, "lines")) + 
+  labs(title = "Distribution of the Grades", x="Grades", y="Count")+
+  theme(plot.title = element_text(hjust = 0.5))+
+  theme_minimal()
+```
+
+```{r}
+ggplot(grades, aes(x = Exam, y= "count")) +
+  geom_boxplot(fill="pink") +
+  labs(title = "Distribution of the Grades", x = "Grades", y = "Count") +
+  theme_minimal()
 ```
 
 ### Question 5
@@ -124,10 +134,10 @@ var_label(G_Dnc) <- "Do not come to the exam by Group "
 knitr::kable(Nst, caption = "Number of students having missing exam by group", format = "markdown")
 ```
 
-### Question 
+### Question
 
-### Question 10 
+### Question 10
 
-### Question 
+### Question
 
 ### Question
