@@ -181,18 +181,27 @@ grades%>% filter(!is.na(Exam))%>%
 
 G_Dnc <- grades %>%
   group_by(Group) %>%
-  summarize(Missing_Exam = sum(is.na(Exam)))
+  summarize(`Missed Exam` = sum(is.na(Exam))) %>%
+  arrange(desc(`Missed Exam`))
 
                          
 var_label(G_Dnc) <- "Do not come to the exam by Group "
 
-knitr::kable(Nst, caption = "Number of students having missing exam by group", format = "markdown")
+knitr::kable(G_Dnc, caption = "Number of students having missing exam by group", format = "markdown")
 ```
 
-### Question
+### Question 9
+
+```{r}
+G_Dnc %>% 
+  ggplot(aes(x = as.character(Group), y = `Missed Exam`)) + 
+  geom_col(fill="darkcyan") + 
+  geom_text(aes(label = `Missed Exam`), vjust = -0.5, color = "black") + 
+  labs(title = "Number of students who does not participate at the Exam by group", x = "Group", y = "Count") +
+  theme_minimal()
+
+```
 
 ### Question 10
-
-### Question
 
 ### Question
