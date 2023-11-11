@@ -142,6 +142,8 @@ grades_2 %>% ggplot(aes(x=Group, fill=Come_to_the_exam)) +
 
 ### Question 7
 
+#### First option
+
 ```{r}
 grades%>%
   filter(!is.na(Exam)) %>%
@@ -155,6 +157,37 @@ grades%>%
 #I add as.character because I want it my x axis to be in a approximatively alphabetical order to be able to find a group more easely
 ```
 
+
+#### Second option
+```{r, fig.width=12, fig.height=12}
+grades%>%
+  filter(!is.na(Exam)) %>%
+  ggplot(aes(y=Exam, fill=as.character(Group))) +
+  geom_bar()+
+  geom_text( stat = "count",  aes(label = stat(count)),position = position_stack(vjust = 0.5),color = "white", size = 3) +
+  geom_hline(yintercept=10, color="green", size=1, linetype="dashed")+
+     labs(title ="Grade by group",subtitle = "(the green line emphasizes the moment when a grade = 10)", x="Count", y="Grades") +
+  theme(legend.position ="bottom")+
+  theme_minimal()
+```
+
+```{r fig.width=12, fig.height=12}
+
+grades %>%
+  filter(!is.na(Exam)) %>%
+  ggplot(aes(y = Exam, fill = as.character(Group))) +
+  geom_bar(position = "fill") +
+  geom_text(stat = "count", aes(label = as.character(Group)), position = position_fill(vjust = 0.5),color = "white",size = 3) +
+  labs(title = "Grade by Group", x = "Proportion", y = "Grades") +
+  theme(legend.position = "bottom") +
+  theme_minimal()
+
+
+```
+
+
+#### Third option
+
 ```{r, fig.width=12, fig.height=24}
 grades%>% filter(!is.na(Exam))%>% 
   ggplot(aes(y = Exam, fill = Group)) +
@@ -165,17 +198,8 @@ grades%>% filter(!is.na(Exam))%>%
   theme_minimal()
 ```
 
-Grade is a discrete value so the following result is more than imperfect but I find easely to read the previous facet with geom_density
 
-```{r, fig.width=12, fig.height=24}
-grades%>% filter(!is.na(Exam))%>% 
-  ggplot(aes(y = Exam, fill = Group)) +
-  geom_density(alpha=0.4) +
-  geom_hline(yintercept = 10, color = "green", size=1)+
- labs(title ="Grade by group",subtitle = "(the green line emphasizes the moment when a grade = 10)", x="Group", y="Grades") + 
-  facet_wrap(~as.character(Group), ncol=4)+
-  theme_minimal()
-```
+
 
 ### Question 8
 
@@ -199,7 +223,7 @@ G_Dnc %>%
   ggplot(aes(x = as.character(Group), y = `Missed Exam`)) + 
   geom_col(fill="darkcyan") + 
   geom_text(aes(label = `Missed Exam`), vjust = -0.5, color = "black") + 
-  labs(title = "Number of students who does not participate at the Exam by group", x = "Group", y = "Count") +
+  labs(title = "Number of students who does not participate at the Exam by group", x = "Group", y = "Missed Exam") +
   theme_minimal()
 
 ```
@@ -262,16 +286,43 @@ glf_online_answers <- grades_long_format%>%
 
 var_label(glf_online_answers) <- "Grades (long format) only for online tests"
 
-glf_online_answers %>% group_by(Id) %>% summarize(Missing_grades =sum(is.na(value))) %>%
+glf_online_answers %>% group_by(Id) %>% summarize(Online_missing_grades =sum(is.na(value))) %>%
 knitr::kable(caption = "Missing grade for the online test by students",format="html") %>%
   kable_minimal()
 ```
 
 
-
 ### Question 15
+```{r}
+#The goal of this code is only to put answer of the previous question in a new object
+glf_online_answers_by_Id <- glf_online_answers %>% 
+  group_by(Id) %>% 
+  summarize(Online_missing_grades =sum(is.na(value)))
+
+#Code to answer to question 15
+grades_m_onl <- merge(x=grades,y=glf_online_answers_by_Id , by="Id", all.x=TRUE)
+
+var_label(grades_m_onl) <- "grades table with an additional column emphasizing the number of test missed online for each student"
+
+grades_m_onl %>%
+  ggplot(aes(y=Exam, fill=as.factor(Online_missing_grades)))+
+  geom_boxplot()+
+  facet_wrap(~Online_missing_grades)
+     theme_dark()+ 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+```{r}
+grades_m_onl %>%
+  ggplot(aes(y=Exam, fill=as.factor(Online_missing_grades)))+
+  geom_bar()+
+  labs(title = "Grades at the Exam by Online Missing Grades")
+     theme_dark()+ 
+  theme(legend.position = "top", axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
 
 ### Question 16
+
 
 ### Question 17
 
